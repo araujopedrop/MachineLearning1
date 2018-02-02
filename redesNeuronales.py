@@ -308,7 +308,7 @@ def excitarRed(diccPer,patron):
 
 
 
-
+#ManuAquinoFirstCodeTester
 
 
 
