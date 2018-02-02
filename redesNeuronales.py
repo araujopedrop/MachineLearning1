@@ -115,7 +115,8 @@ def excitarPerceptron(input,per):
 
 
 
-
+# Las definiciones de arriba son viejas y estan hechas para un solo perceptron (salvo calcularNeta, hardlim, hardlims y logsig)
+# Las definiciones de abajo estan hechas para varias capas
 
 
 
@@ -192,12 +193,12 @@ def crearRedPerceptron(capas,cantEntradas):
 	cont = 0
 	numeroPer = 1
 	for elem in range(capas):    
-		cantPerceptrones = cantPerceptrones + (elem + 1)    #obtengo la cantidad de perceptrones totales
+		cantPerceptrones = cantPerceptrones + (elem + 1)              #obtengo la cantidad de perceptrones totales
 
 	print "Capa: %d" % (numeroCapa)
 	while(numeroPer <= cantPerceptrones):					
 		if cont < numeroCapa:
-			if (numeroCapa == capas):                         #Si estoy en la ultima capa
+			if (numeroCapa == capas):                             #Si estoy en la ultima capa
 				perceptron = crearPerceptron(cantEntradas)    #Creo perceptrones con "cantEntradas + 1" entradas. +1 por la de bias
 			else:
 				perceptron = crearPerceptron(numeroCapa + 1)  #Creo perceptrones con "numeroCapa + 2" entradas. +2 del bias y xq entradas = cantAnteriorPerceptrones + 1 
@@ -206,12 +207,12 @@ def crearRedPerceptron(capas,cantEntradas):
 			numeroPer = numeroPer + 1
 		else:
 			print "Capa: %d" % (numeroCapa-1)
-			diccPerceptrones[numeroCapa] = listaPerceptrones  #Lleno el diccionario con la clave y su lista respectiva
+			diccPerceptrones[numeroCapa] = listaPerceptrones      #Lleno el diccionario con la clave y su lista respectiva
 			cont = 0
 			numeroCapa = numeroCapa - 1
 			listaPerceptrones = []
 	print
-	diccPerceptrones[numeroCapa] = listaPerceptrones          #Lleno el diccionario con la clave y su lista respectiva de la primera capa
+	diccPerceptrones[numeroCapa] = listaPerceptrones                      #Lleno el diccionario con la clave y su lista respectiva de la primera capa
 
 	print diccPerceptrones
 	return diccPerceptrones
@@ -230,25 +231,25 @@ def entrenarRedPerceptron(diccPer,pat,a):
 	pataux = pat
 	lenPatron =  len(pat[0])
 	salida = 0
-	while (flag != 0):                      #Si el flag se pone en 1, quiere decir que la red ya aprendio
-		if cantIteraciones < 22000:             #Pongo un limite en las iteraciones para que no loopee infinitamente
+	while (flag != 0):                                      #Si el flag se pone en 1, quiere decir que la red ya aprendio
+		if cantIteraciones < 22000:                     #Pongo un limite en las iteraciones para que no loopee infinitamente
 			cantIteraciones = cantIteraciones + 1
 			flag = 0
 			print
 			print "Iteracion: %d" % (cantIteraciones)
 			print
-			for patron in pataux:      							                      #Por cada patron
+			for patron in pataux:      							      #Por cada patron
 				print "  Patron:",patron
 				print
 				salida = patron[lenPatron-1]
-				for capa in diccPer:                                                  #Por cada capa
-					if(capa == 1):											          #Si es la capa mas grande
+				for capa in diccPer:                                                          #Por cada capa
+					if(capa == 1):							      #Si es la capa mas grande
 						listaInput = inicializarListaInput(patron,listaInput,capas)   #inicializo la listaInput por cada patron. Lo hago una vez por cada uno
-					else:						                                      #Si es otra capa
-						listaInput = generarListaInput(listaneta)          		      #genero la lista de input con la lista neta
+					else:						                      #Si es otra capa
+						listaInput = generarListaInput(listaneta)          	      #genero la lista de input con la lista neta
 						print
 						print
-					listaCapa  = diccPer[capas-capa+1]                                #tomo la capa (de la mas grande a la mas chica)
+					listaCapa  = diccPer[capas-capa+1]                                    #tomo la capa (de la mas grande a la mas chica)
 					print "    Capa", capas-capa+1
 					print "   ",listaCapa
 					print
@@ -290,13 +291,13 @@ def excitarRed(diccPer,patron):
 	listaneta = []
 	listaCapa = []
 	capas = max(diccPer.keys())
-	for capa in diccPer:                                                  #Por cada capa
-		if(capa == 1):											          #Si es la capa mas grande
+	for capa in diccPer:                                                          #Por cada capa
+		if(capa == 1):		                                              #Si es la capa mas grande
 			listaInput = inicializarListaInput(patron,listaInput,capas)   #inicializo la listaInput por cada patron. Lo hago una vez por cada uno
-		else:						                                      #Si es otra capa
-			listaInput = generarListaInput(listaneta)          		      #genero la lista de input con la lista neta
-		listaCapa  = diccPer[capas-capa+1]                                #tomo la capa (de la mas grande a la mas chica)
-		listaneta  = calcularListaNeta(listaCapa,listaInput)              #genero la lista neta
+		else:						                      #Si es otra capa
+			listaInput = generarListaInput(listaneta)                     #genero la lista de input con la lista neta
+		listaCapa  = diccPer[capas-capa+1]                                    #tomo la capa (de la mas grande a la mas chica)
+		listaneta  = calcularListaNeta(listaCapa,listaInput)                  #genero la lista neta
 		listaInput = []
 	return listaneta
 
@@ -320,16 +321,12 @@ alfa = 0.6
 patronAND = [[1,1,1],[1,0,0],[0,1,0],[0,0,0]]
 patronOR  = [[0,0,0],[0,1,1],[1,0,1],[1,1,1]]
 patronXOR = [[1,1,0],[1,0,1],[0,1,1],[0,0,0]]
-patron2   = [[2,1,1],[0,-1,1],[-2,1,-1],[0,2,-1]]
-patronCuadrados = [[1,1,1],[2,4,1],[3,9,1],[4,16,1],[5,25,1],[6,36,1],[7,49,1],[8,64,1],[9,81,1],[10,100,1],[4,2,0],[9,3,0],[16,4,0],[36,6,0],[49,7,0],[64,8,0]]
+
 
 
 #Lista1 = crearPerceptron(numeroEntradas)
 #Lista1 = entrenarPerceptron(Lista1,patronAND,alfa)
 red = crearRedPerceptron(numeroCapas,numeroEntradas)
-red = entrenarRedPerceptron(red,patronXOR,alfa)
-#print calcularNeta(Lista1,[1,1])
+red = entrenarRedPerceptron(red,patronAND,alfa)
 
-print excitarRed(red,[12,121,1])
-print excitarRed(red,[12,120,0])
-print excitarRed(red,[12,181,1])
+
